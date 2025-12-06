@@ -11,12 +11,12 @@ let isGameOver = false; // játék vége állapot
 
 function initializeGame() {
     // véletlenszerűen kiválaszt egy szót a listából
-    const randomIndex Math.floor(Math.random() * WORD_LIST.length);// véletlenszerű index
+    const randomIndex = Math.floor(Math.random() * WORD_LIST.length);// véletlenszerű index
     TARGET_WORD = WORD_LIST[randomIndex];// kiválasztott szó
 
     isGameOver = false;// játék újraindítása
     messageElement.textContent = "Start typing!";// kezdo üzenet
-    restartButton.disabled = true;// új játék gomb letiltása
+    resetButton.disabled = true;// új játék gomb letiltása
 
     boxes.forEach(box => { // mezők alaphelyzetbe állítása
         box.value = "";
@@ -48,7 +48,7 @@ function handleInput(event) {// bemenet esemenykezelo fugveny
 // ellenőrzi, hogy a megadott betű helyes-e a cél szóban
 function checkLetter(index, letter) {
     const targetLetter = TARGET_WORD[index]; // a cél szó betűje az adott indexen
-    const curentBox = boxes[index]; // az aktuális mező
+    const currentBox = boxes[index]; // az aktuális mező
 
     if (letter === targetLetter) {// ha a betű helyes
         currentBox.classList.add('correct'); // zöld háttér
@@ -75,7 +75,7 @@ function checkLetter(index, letter) {
 function checkFullWord() {
     isGameOver = true; // játék vége
     messageElement.textContent = 'You won! Good job!'; // győzelmi üzenet
-    restartButton.disabled = false; // // új játék gomb engedélyezése
+    resetButton.disabled = false; // // új játék gomb engedélyezése
 }
 
 // esemenyfigyelok beallitasa 
@@ -85,12 +85,17 @@ boxes.forEach(box => {// vegigmegy az osszes betu mezon
 
     // kulonleges eset: backspace kezelese
     box.addEventListener('keydown', (event) => { // billentyű lenyomás esemény kezelése
-        let index = 
+        let index = parseInt(box.getAttribute('data-index'));
 
-
-        if (event.key === 'Backspace' && box.value === '') {}
-
-    }
-    )
+        if (event.key === 'Backspace' && box.value === '') { // ha backspacet nyomnak és a mező üres
+            if (index > 0 && boxes[index - 1].classList.contains('correct')) { // ha az előző mező helyes
+                event.preventDefault(); // alapértelmezett viselkedés megakadályozása
+            }
+        }
+    });
 });
 
+// új játék gomb eseménykezelő
+resetButton.addEventListener('click', initializeGame);
+
+initializeGame(); // a jatek elso elinditasa a betoltés után
