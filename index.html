@@ -10,9 +10,22 @@
 
     <h1>Pressss your keys!</h1>
 
-    <div class="game-card">
-        <div>
-            
+    <div class="game-card"><!-- a fo jatekkartya kontener -->
+        <!-- A beviteli mezok szekcioja -->
+        <div id="game-container" class="input-container">
+            <input type="text" id="letter1" data-index="0" maxlength="1" class="letter-box" autofocus>
+            <input type="text" id="letter2" maxlength="1" data-index="1" class="letter-box">
+            <input type="text" id="letter3" data-index="2" maxlength="1" class="letter-box">
+        </div>
+
+        <p id="message" class="message">
+            Start typing!
+        </p>
+
+        <div style="text-align: center;">
+            <button id="restart-button" class="restart-button" disabled> <!-- Alapértelmezetten inaktív. -->
+                New Game 
+            </button>
         </div>
     </div>
 
