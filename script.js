@@ -4,7 +4,7 @@ let TARGET_WORD = ""; // a kitalálandó szó
 
 const boxes = document.querySelectorAll('.letter-box');// az összes betű mező
 const messageElement = document.getElementById('message');// üzenet megjelenítő
-const resetButton = document.getElementById('reset-button');// új játék gomb
+const resetButton = document.getElementById('restart-button');// új játék gomb
 
 // game state
 let isGameOver = false; // játék vége állapot
