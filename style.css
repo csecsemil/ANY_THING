@@ -45,13 +45,13 @@ h1 {
     font-weight: 600;
 }
 
-/* Tooltip text */
+/* Tooltip text (I added from w3schools)*/
 .tooltiptext {
     text-align: center;
     visibility: hidden;
     /* Hidden by default */
     width: fit-content;
-    background-color: black;
+    background-color: rgb(15, 15, 15);
     color: #ffffff;
     text-align: center;
     padding: 5px 0px;
@@ -113,6 +113,6 @@ letter-box:focus {
     font-size: 1.8rem;
     text-align: center;
     font-family: "Bitcount Grid Single", system-ui;
-    border: rgb(0, 0, 0) 3px solid;
+    border: rgb(3, 2, 2) 3px solid;
     transition: width 2s;
 }

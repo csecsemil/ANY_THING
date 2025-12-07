@@ -19,8 +19,6 @@ boxes.forEach(box => {// vegigmegy az osszes betu mezon
 
     // kulonleges eset: backspace kezelese
     box.addEventListener('keydown', (event) => { // billentyű lenyomás esemény kezelése
-        // let index = parseInt(box.getAttribute('data-index'));
-
         if (event.key === 'Backspace') { // ha backspacet nyomnak és a mező üres
             event.preventDefault();
         }
@@ -108,7 +106,7 @@ function checkLetter(index, letter) {
 function gameOver() {
     isGameOver = true; // játék vége
     messageElement.textContent = 'You won! Good job!'; // győzelmi üzenet
-    resetButton.disabled = false; // // új játék gomb engedélyezése
+    resetButton.disabled = false; /// új játék gomb engedélyezése
     clearInterval(timer);
 }
 
