@@ -1,13 +1,36 @@
 // jatek logika
-const WORD_LIST = ["CAT", "DOG", "RUN", "SUN", "CAR", "RED", "FUN", "MAN", "SEE", "ZOO", ]
+const WORD_LIST = ["CAT", "DOG", "RUN", "SUN", "CAR", "RED", "FUN", "MAN", "SEE", "ZOO", "all", "and", "are", "big", "but", "bye", "can", "for", "get", "her", "his", "let", "man", "may", "new", "not", "now", "one", "out", "run", "saw", "she", "two", "was", "you" ]
 let TARGET_WORD = ""; // a kitalálandó szó
 
 const boxes = document.querySelectorAll('.letter-box');// az összes betű mező
 const messageElement = document.getElementById('message');// üzenet megjelenítő
 const resetButton = document.getElementById('restart-button');// új játék gomb
+const timerElement = document.getElementById('timer'); 
 
 // game state
 let isGameOver = false; // játék vége állapot
+let timeCounter = 0; //ido szamlalo masodpercben bunteto idovel
+let timer ;
+
+// esemenyfigyelok beallitasa 
+boxes.forEach(box => {// vegigmegy az osszes betu mezon
+    box.addEventListener('input', handleInput);// bemenet esemeny kezelese
+
+
+    // kulonleges eset: backspace kezelese
+    box.addEventListener('keydown', (event) => { // billentyű lenyomás esemény kezelése
+        // let index = parseInt(box.getAttribute('data-index'));
+
+        if (event.key === 'Backspace') { // ha backspacet nyomnak és a mező üres
+            event.preventDefault();
+        }
+    });
+});
+
+// új játék gomb eseménykezelő
+resetButton.addEventListener('click', initializeGame);
+
+initializeGame(); // a jatek elso elinditasa a betoltés után
 
 function initializeGame() {
     // véletlenszerűen kiválaszt egy szót a listából
@@ -24,6 +47,14 @@ function initializeGame() {
         box.disabled = false; // mezők engedélyezése
     });
     boxes[0].focus(); // fókusz az első mezőre
+
+    timeCounter = 0;
+    timerElement.textContent = timeCounter;
+    timer = setInterval(() => {
+        timeCounter++; 
+        timerElement.textContent = timeCounter;
+        
+    }, 1000);
 }
 
 
@@ -47,7 +78,7 @@ function handleInput(event) {// bemenet esemenykezelo fugveny
 
 // ellenőrzi, hogy a megadott betű helyes-e a cél szóban
 function checkLetter(index, letter) {
-    const targetLetter = TARGET_WORD[index]; // a cél szó betűje az adott indexen
+    const targetLetter = TARGET_WORD[index].toUpperCase(); // a cél szó betűje az adott indexen
     const currentBox = boxes[index]; // az aktuális mező
 
     if (letter === targetLetter) {// ha a betű helyes
@@ -59,7 +90,7 @@ function checkLetter(index, letter) {
             boxes[index + 1].focus(); // fókusz a következő mezőre
         } else {
             // ha ez volt az utolsó mező, elenorizd a játék végét
-            checkFullWord();
+            gameOver();
         }
     } else {// ha a betű helytelen
         currentBox.value = ''; // torli a helytelen betűt
@@ -68,34 +99,19 @@ function checkLetter(index, letter) {
         // fókusz vissza az aktuális mezőre
 
         currentBox.focus();// focusz a jelenlegi mezőre
+        timeCounter += 1; 
+        timerElement.textContent = timeCounter;
     }
 }
 
 // ellenőrzi, hogy a teljes szó helyes-e
-function checkFullWord() {
+function gameOver() {
     isGameOver = true; // játék vége
     messageElement.textContent = 'You won! Good job!'; // győzelmi üzenet
     resetButton.disabled = false; // // új játék gomb engedélyezése
+    clearInterval(timer);
 }
 
-// esemenyfigyelok beallitasa 
-boxes.forEach(box => {// vegigmegy az osszes betu mezon
-    box.addEventListener('input', handleInput);// bemenet esemeny kezelese
 
 
-    // kulonleges eset: backspace kezelese
-    box.addEventListener('keydown', (event) => { // billentyű lenyomás esemény kezelése
-        let index = parseInt(box.getAttribute('data-index'));
 
-        if (event.key === 'Backspace' && box.value === '') { // ha backspacet nyomnak és a mező üres
-            if (index > 0 && boxes[index - 1].classList.contains('correct')) { // ha az előző mező helyes
-                event.preventDefault(); // alapértelmezett viselkedés megakadályozása
-            }
-        }
-    });
-});
-
-// új játék gomb eseménykezelő
-resetButton.addEventListener('click', initializeGame);
-
-initializeGame(); // a jatek elso elinditasa a betoltés után
