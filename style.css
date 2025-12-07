@@ -38,7 +38,6 @@ h1 {
 .tooltip {
     text-align: center;
     position: relative;
-    display: inline-block;
     border-bottom: 1px dotted black;
     cursor: pointer;
     margin-bottom: 1rem;

@@ -75,9 +75,10 @@ function handleInput(event) {// bemenet esemenykezelo fugveny
 
 
 // ellenőrzi, hogy a megadott betű helyes-e a cél szóban
-function checkLetter(index, letter) {
+function checkLetter(index, letter) { 
     const targetLetter = TARGET_WORD[index].toUpperCase(); // a cél szó betűje az adott indexen
     const currentBox = boxes[index]; // az aktuális mező
+    // (Dis is not the best way to do it)
 
     if (letter === targetLetter) {// ha a betű helyes
         currentBox.classList.add('correct'); // zöld háttér
